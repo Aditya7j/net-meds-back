@@ -1,6 +1,8 @@
 const express = require("express");
 const Beard = require("../models/Beard.model");
 const router = express.Router();
+
+
 router.get("", async (req, res) => {
   try {
     const beard  = await Beard.find().lean().exec();
@@ -29,4 +31,14 @@ router.post("", async (req, res) => {
   }
 });
 
+router.get("/sort", async (req, res) => {
+  try {
+    const beard  = await Beard.find().sort({prcie:1}).lean().exec();
+    return res.status(200).send(beard);
+  } catch (err) {
+    return res.status(500).send({ message: err.message });
+  }
+});
+
 module.exports = router;
+
