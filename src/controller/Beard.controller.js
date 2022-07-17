@@ -12,6 +12,24 @@ router.get("", async (req, res) => {
   }
 });
 
+router.get("/sort/asc", async (req, res) => {
+  try {
+    const beard  = await Beard.find().sort({prcie:1}).lean().exec();
+    return res.status(200).send(beard);
+  } catch (err) {
+    return res.status(500).send({ message: err.message });
+  }
+});
+
+router.get("/sort/dsc", async (req, res) => {
+  try {
+    const beard  = await Beard.find().sort({prcie:-1}).lean().exec();
+    return res.status(200).send(beard);
+  } catch (err) {
+    return res.status(500).send({ message: err.message });
+  }
+});
+
 router.get("/:id", async (req, res) => {
   try {
     const beard  = await Beard.findById(req.params.id).lean().exec();
@@ -31,14 +49,7 @@ router.post("", async (req, res) => {
   }
 });
 
-router.get("/sort", async (req, res) => {
-  try {
-    const beard  = await Beard.find().sort({prcie:1}).lean().exec();
-    return res.status(200).send(beard);
-  } catch (err) {
-    return res.status(500).send({ message: err.message });
-  }
-});
+
 
 module.exports = router;
 
